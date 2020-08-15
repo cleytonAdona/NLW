@@ -3,7 +3,8 @@ const server = express()
 const {
     pageLanding,
     pageStudy,
-    pageStudy
+    pageGiveClasses,
+    saveClasses
 } = require('./pages')
     //Configurar NunJucks
 const nunjucks = require('nunjucks')
@@ -12,8 +13,11 @@ nunjucks.configure('src/views', {
     noCache: true,
 })
 
-server.use(express.static("public"))
+server
+    .use(express.urlencoded({ extended: true }))
+    .use(express.static("public"))
     .get("/", pageLanding)
     .get("/study", pageStudy)
     .get("/give-classes", pageGiveClasses)
+    .post("/save-classes", saveClasses)
     .listen(5000)
